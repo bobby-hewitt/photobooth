@@ -2,30 +2,20 @@ import React, { useEffect, useContext, useState} from 'react'
 import { Webcam } from '../components'
 import Context from '../contexts/global'
 
-
-
-
 function Booth() {
   const state = useContext(Context)
   const [ count, setCount ] = useState(0)
-  
 
-   useEffect(() => {
+  useEffect(() => {
      if(state.lastInfo && state.photoBlocked){
        setCount(count+1)
-       console.log('take photo')
-     } else {
-       console.log('no photo')
      }
+  },[
+     state.photoBlocked,
+     state.lastInfo && state.lastInfoId ? state.lastInfoId : null
+  ])
 
-   },[
-   state.photoBlocked,
-   state.lastInfo && state.lastInfoId ? state.lastInfoId : null
-   ])
-
-   const onComplete = (url) => {
-     console.log('url', url)
-     console.log('complete', state.lastInfoId)
+  const onComplete = (url) => {
      state.database.ref(`/photos/${state.lastInfoId}`).once('value').then((snapshot) => {
        let arr = snapshot.val()
        if (arr && arr.length && arr.length){
@@ -34,14 +24,12 @@ function Booth() {
        state.database.ref(`/photos/${state.lastInfoId}`).set(arr && arr.length && arr.length > 0 ? arr : [url])
        .then(() => {
          state.database.ref(`/lastInfo/photoBlocked`).set(false)
-       })
-        
+       })  
      })
    }
-
-  return (    
-      <Webcam count={count} onComplete={onComplete}/>
-  );
+    return (    
+        <Webcam count={count} onComplete={onComplete}/>
+    );
 }
 
 export default Booth;

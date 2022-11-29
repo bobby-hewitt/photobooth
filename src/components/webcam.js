@@ -1,11 +1,21 @@
 import React, { useEffect, useState, useRef, useContext} from "react";
 import Webcam from "react-webcam";
 import Context from '../contexts/global'
+import Styled from 'styled-components'
+
+
+const VideoContainer = Styled.div`
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  width:100vw;
+`
 
 const videoConstraints = {
   width: 192  ,
-  height: 108,
-  facingMode: "user"
+  height: 192,
+
 };
 
 const WebcamCapture = ({takePhoto, onComplete, count}) => {
@@ -61,16 +71,17 @@ const WebcamCapture = ({takePhoto, onComplete, count}) => {
   },[count])
 
   return (
-    <React.Fragment>
+    <VideoContainer>
       <Webcam
+        mirrored={true}
         audio={false}
-        height={720}
+        height={window.innerHeight-36 }
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={1280}
+        width={window.innerHeight-36}
         videoConstraints={videoConstraints}
       />
-    </React.Fragment>
+    </VideoContainer>
   );
 };
 

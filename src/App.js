@@ -2,6 +2,7 @@ import React, { useContext,useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/database";
 import RouteComponent from './RouteComponent'
+import './App.css'
 import { v4 as uuidv4 } from 'uuid';
 import Context, { Provider} from './contexts/global'
 //db
