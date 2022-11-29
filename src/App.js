@@ -29,11 +29,15 @@ function createId(){
 
 export default function App() {
    const [lastInfo, setLastInfo ] = useState(null)
+   const [lastInfoId, setLastInfoId ] = useState(null)
+   const [lastInfoPhotoBlocked, setLastInfoPhotoBlocked ] = useState(null)
    const [photos, setPhotos ] = useState(null)
    useEffect(() => {
     database.ref('/lastInfo').on('value', (snapshot) => {
       console.log('getting last info', snapshot.val())
-      setLastInfo(snapshot.val())
+      let data = snapshot.val()
+      setLastInfoId(data.id)
+      setLastInfoPhotoBlocked(data.photoBlocked)
     });
     database.ref('/photos').on('value', (snapshot) => {
       setPhotos(snapshot.val())
@@ -44,12 +48,11 @@ export default function App() {
       <Provider value={{
         database,
         photos,
-        lastInfo,
-        lastInfoId: lastInfo && lastInfo.id ? lastInfo.id : null, 
-        photoBlocked: lastInfo && lastInfo.photoBlocked,
+        lastInfoId,
+        lastInfoPhotoBlocked,
         id
       }}> 
-      {database && lastInfo &&
+      {database && lastInfoId &&
         <RouteComponent />
       }
       </Provider>

@@ -7,28 +7,33 @@ function Booth() {
   const [ count, setCount ] = useState(0)
 
   useEffect(() => {
-     if(state.lastInfo && state.photoBlocked){
+     if(state.lastInfoPhotoBlocked){
+     
        setCount(count+1)
      }
   },[
-     state.photoBlocked,
-     state.lastInfo && state.lastInfoId ? state.lastInfoId : null
+     state.lastInfoPhotoBlocked,
+     state.lastInfoId
   ])
 
-  const onComplete = (url) => {
-     state.database.ref(`/photos/${state.lastInfoId}`).once('value').then((snapshot) => {
-       let arr = snapshot.val()
+  function onComplete(url, lastId){
+     state.database.ref('/').once('value').then((snapshot) => {
+      let data = snapshot.val()
+      const lastId = data.lastInfo.id
+      let arr = data.photos && data.photos[lastId] ? data.photos[lastId] : []
+      let ref = `/photos/${lastId}`
+      console.log('HERLLLOERLLOER', lastId)
        if (arr && arr.length && arr.length){
          arr.unshift(url)
        }
-       state.database.ref(`/photos/${state.lastInfoId}`).set(arr && arr.length && arr.length > 0 ? arr : [url])
+       state.database.ref(ref).set(arr && arr.length && arr.length > 0 ? arr : [url])
        .then(() => {
          state.database.ref(`/lastInfo/photoBlocked`).set(false)
-       })  
+       }) 
      })
    }
     return (    
-        <Webcam count={count} onComplete={onComplete}/>
+        <Webcam count={count} lastId={state.lastInfoId} onComplete={(url) => onComplete(url)}/>
     );
 }
 

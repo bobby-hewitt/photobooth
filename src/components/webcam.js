@@ -18,7 +18,7 @@ const videoConstraints = {
 
 };
 
-const WebcamCapture = ({takePhoto, onComplete, count}) => {
+const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {
   const state = useContext(Context)
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(
@@ -52,7 +52,7 @@ const WebcamCapture = ({takePhoto, onComplete, count}) => {
         var response = JSON.parse(xhr.responseText);
         var url = response.secure_url;
         var type = file.type
-        onComplete(response.url)
+        onComplete(response.url, lastId)
         //CALL UPLOAD CALLBACK       
       }
     };

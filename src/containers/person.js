@@ -20,7 +20,7 @@ function Person() {
   const photos = state.photos && state.photos[state.id] ? state.photos[state.id] : []
   
   function onTakePhoto(){
-    if (state.lastInfo && !state.lastInfo.photoBlocked){
+    if (!state.lastInfoPhotoBlocked){
       state.database.ref('/lastInfo').set({
         photoBlocked: true,
         id: state.id,
@@ -31,7 +31,7 @@ function Person() {
 
   return (    
       <React.Fragment>
-      <Button text="Take Photo" onClick={onTakePhoto} disabled={state.lastInfo.photoBlocked}/>
+      <Button text="Take Photo" onClick={onTakePhoto} disabled={state.lastInfoPhotoBlocked}/>
         <PhotoContainer>
         {photos && photos.map((item, i) => {
           return(
