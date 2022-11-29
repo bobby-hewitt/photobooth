@@ -5,5 +5,44 @@
 }
 
 body{
-	/*background: #202020;*/
+	background: #000000;
+}
+
+.BoothContainer {
+
+}
+
+.Flash {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: white;
+	z-index: 1;
+}
+
+.CountdownTimer {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	font-size: 200px;
+	font-weight: bold;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.QRCode {
+	position: fixed;
+	bottom: 10px;
+	left: 50%;
+	margin-left: -50px;
+	width: 100px;
+	height: 100px;
+	background: white;
+	border-radius: 6px;
+	overflow: hidden;
+}
+.QRCode img{
+	width: 100%;
 }

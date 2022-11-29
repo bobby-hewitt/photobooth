@@ -2,13 +2,13 @@ import React, { useEffect, useContext, useState} from 'react'
 import { Webcam } from '../components'
 import Context from '../contexts/global'
 
+
 function Booth() {
   const state = useContext(Context)
   const [ count, setCount ] = useState(0)
 
   useEffect(() => {
      if(state.lastInfoPhotoBlocked){
-     
        setCount(count+1)
      }
   },[
@@ -32,8 +32,13 @@ function Booth() {
        }) 
      })
    }
-    return (    
-        <Webcam count={count} lastId={state.lastInfoId} onComplete={(url) => onComplete(url)}/>
+    return (
+        <div className="BoothContainer">
+          <Webcam count={count} lastId={state.lastInfoId} onComplete={(url) => onComplete(url)}/>
+          <div className="QRCode">
+            <img src="qr.png" />
+          </div>
+        </div>
     );
 }
 

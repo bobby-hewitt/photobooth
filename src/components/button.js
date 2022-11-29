@@ -9,7 +9,8 @@ right:12px;
 height:80px;
 width:80px;
 border-radius:60px;
-background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(60,60,60,1) 100%);
+background: rgba(255,255,255,0.2);
+border: 2px solid white;
 box-shadow: 4px 4px 20px #000000aa;
 display:flex;
 align-items:center;
@@ -22,7 +23,6 @@ const ButtonInner = Styled.div`
   width:70px;
   height:70px;
   border-radius:50%;
-  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(60,60,60,1) 100%);
 `
 
 const CameraImage = Styled.img`
@@ -31,7 +31,7 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%);
   width:30px;
-  opacity:0.5;
+  opacity:1;
   height:auto; 
 
 `
@@ -47,8 +47,6 @@ transform:translate(-50%,-50%);
   <CameraImage src="camera.png"/>
         <ButtonInner />
         <div className="button" style={{opacity: disabled ? 0 : 1}}/>
-          
-        
   </ButtonContainer>
   );
 }

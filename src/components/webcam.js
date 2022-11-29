@@ -13,14 +13,20 @@ const VideoContainer = Styled.div`
 `
 
 const videoConstraints = {
-  width: 192  ,
-  height: 192,
-
+  width: 1920,
+  height: 1080,
+  aspectRatio: 1.777777778,
 };
 
 const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {
   const state = useContext(Context)
   const webcamRef = React.useRef(null);
+  
+  const [ countdown, setCountdown ] = useState(3);
+  const [ showCountdown, setShowCountdown ] = useState(false);
+  const [ showFlash, setShowFlash ] = useState(false);
+  const [ prevCount, setPrevCount ] = useState(count);
+
   const capture = React.useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot();
@@ -63,24 +69,44 @@ const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {
     xhr.send(fd);
   }
 
+  const flash = () => {
+    setShowFlash(true);
+    setTimeout(() => {
+      setShowFlash(false);
+    }, 100)
+  }
+
   useEffect(() => {
-    
-    if(count !== 0){
-      capture()
+    if(prevCount < count) {
+      if(countdown > 0) {
+        setShowCountdown(true);
+        setTimeout(() => { 
+          setCountdown(countdown - 1)
+        }, 1000)
+      } else if (countdown === 0) {
+        capture();
+        console.log('Take Photo');
+        setShowCountdown(false);
+        flash();
+        setCountdown(3);
+        setPrevCount(count);
+      }
     }
-  },[count])
+  }, [count, countdown]);
 
   return (
     <VideoContainer>
       <Webcam
         mirrored={true}
         audio={false}
-        height={window.innerHeight-36 }
+        height={window.innerHeight}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={window.innerHeight-36}
+        width={window.innerWidth}
         videoConstraints={videoConstraints}
       />
+      {showCountdown && <div className="CountdownTimer">{countdown}</div>}
+      {showFlash && <div className="Flash"/>}
     </VideoContainer>
   );
 };
