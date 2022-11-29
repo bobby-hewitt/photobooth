@@ -21,6 +21,7 @@ function Person() {
 
   return (    
         <div>
+        <p>{state.id}</p>
         <Button text="Take Photo" onClick={onTakePhoto} disabled={state.lastInfo.photoBlocked}/>
         {photos && photos.map((item, i) => {
           return(

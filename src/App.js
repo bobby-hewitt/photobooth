@@ -44,6 +44,7 @@ export default function App() {
         database,
         photos,
         lastInfo,
+        lastInfoId: lastInfo && lastInfo.id ? lastInfo.id : null, 
         photoBlocked: lastInfo && lastInfo.photoBlocked,
         id
       }}> 
