@@ -13,9 +13,9 @@ const VideoContainer = Styled.div`
 `
 
 const videoConstraints = {
-  width: 1920,
-  height: 1080,
-  aspectRatio: 1.777777778,
+  width: 1080,
+  height: 1920,
+  aspectRatio: 0.5625,
 };
 
 const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {

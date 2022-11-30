@@ -32,6 +32,7 @@ export default function App() {
    const [lastInfoId, setLastInfoId ] = useState(null)
    const [lastInfoPhotoBlocked, setLastInfoPhotoBlocked ] = useState(null)
    const [photos, setPhotos ] = useState(null)
+   const [initialLoad, setInitialLoad] = useState(true)
    useEffect(() => {
     database.ref('/lastInfo').on('value', (snapshot) => {
       console.log('getting last info', snapshot.val())
@@ -49,7 +50,10 @@ export default function App() {
         database,
         photos,
         lastInfoId,
+        initialLoad,
+        setInitialLoad,
         lastInfoPhotoBlocked,
+        myPhotos: photos && photos[id] ? photos[id] : [],
         id
       }}> 
       {database && lastInfoId &&

@@ -17,17 +17,13 @@ function Booth() {
   ])
 
   function onComplete(url, lastId){
-     state.database.ref('/').once('value').then((snapshot) => {
+     state.database.ref('/photos').once('value').then((snapshot) => {
       let data = snapshot.val()
-      const lastId = data.lastInfo.id
-      let arr = data.photos && data.photos[lastId] ? data.photos[lastId] : []
-      let ref = `/photos/${lastId}`
-      console.log('HERLLLOERLLOER', lastId)
-       if (arr && arr.length && arr.length){
-         arr.unshift(url)
-       }
-       state.database.ref(ref).set(arr && arr.length && arr.length > 0 ? arr : [url])
-       .then(() => {
+      let newData = data && data.length ? data : []
+      newData.unshift(url) 
+      console.log('newData', newData)
+      state.database.ref('/photos').set(newData)
+      .then(() => {
          state.database.ref(`/lastInfo/photoBlocked`).set(false)
        }) 
      })
