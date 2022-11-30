@@ -5,7 +5,7 @@ import React, { useContext,useEffect, useState } from "react";
 import {Person, Booth } from './containers'
 import Context from './contexts/global'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Link
@@ -17,7 +17,9 @@ export default function RouteComponent() {
         <Router>
           <Routes>
             <Route path="/" element={<Person />} />
+            <Route path="/photobooth" element={<Person />} />
             <Route path="/booth" element={<Booth />} />
+            <Route path="photobooth/booth" element={<Booth />} />
           </Routes>
         </Router>
     );
