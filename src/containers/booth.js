@@ -16,7 +16,8 @@ function Booth() {
   const [ count, setCount ] = useState(0)
   const [photoBlocked, setPhotoBlocked ] = useState(false)
   const [photos, setPhotos ] = useState([])
-
+  const url = window.encodeURIComponent(`https://bobby-hewitt.github.io/photobooth/user/${id}`)
+  console.log(url)
   useEffect(() => {
     state.database.ref(`/${id}`).on('value', (snapshot) => {
         let data = snapshot.val()
@@ -50,7 +51,7 @@ function Booth() {
     <div className="BoothContainer">
       <Webcam id={id} count={count} onComplete={(url) => onComplete(url)}/>
       <div className="QRCode">
-        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://bobby-hewitt.github.io/photobooth/user/${id}`} />
+        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${url}`} />
       </div>
     </div>
   );
