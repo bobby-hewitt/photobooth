@@ -18,8 +18,8 @@ export default function RouteComponent() {
           <Routes>
             <Route path="/" element={<Person />} />
             <Route path="/photobooth" element={<Person />} />
-            <Route path="/booth" element={<Booth />} />
-            <Route path="photobooth/booth" element={<Booth />} />
+            <Route path="/booth/:id" element={<Booth id={id}/>} />
+            <Route path="photobooth/booth/:id" element={<Booth id={id}/>} />
           </Routes>
         </Router>
     );
