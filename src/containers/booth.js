@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState} from 'react'
 import { Webcam } from '../components'
 import Context from '../contexts/global'
 import { v4 as uuidv4 } from 'uuid';
+import QRCode from 'qrcode'
 
 const localStore = window.localStorage.getItem('myPhotoboothId');
 const id = localStore ? localStore : createId()
@@ -11,13 +12,15 @@ function createId(){
   return localId
 }
 
+
+
 function Booth() {
   const state = useContext(Context)
+  const [ QR, setQR]= useState(null)
   const [ count, setCount ] = useState(0)
   const [photoBlocked, setPhotoBlocked ] = useState(false)
   const [photos, setPhotos ] = useState([])
-  const url = window.encodeURIComponent(`https://bobby-hewitt.github.io/photobooth/user/${id}`)
-  console.log(url)
+  
   useEffect(() => {
     state.database.ref(`/${id}`).on('value', (snapshot) => {
         let data = snapshot.val()
@@ -27,6 +30,12 @@ function Booth() {
         }
       });
    },[])
+
+  useEffect(() => {
+    QRCode.toDataURL(`https://bobby-hewitt.github.io/photobooth/#/user/${id}`, function (err, url) {
+      setQR(url)
+    })
+  },[])
 
   useEffect(() => {
      if(photoBlocked){
@@ -51,7 +60,9 @@ function Booth() {
     <div className="BoothContainer">
       <Webcam id={id} count={count} onComplete={(url) => onComplete(url)}/>
       <div className="QRCode">
-        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${url}`} />
+      {QR &&
+        <img src={QR} />
+      }
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import {Person, Booth } from './containers'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
