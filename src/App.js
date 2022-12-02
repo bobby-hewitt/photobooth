@@ -3,7 +3,6 @@ import firebase from "firebase/app";
 import "firebase/database";
 import RouteComponent from './RouteComponent'
 import './App.css'
-import { v4 as uuidv4 } from 'uuid';
 import Context, { Provider} from './contexts/global'
 //db
 const firebaseConfig = {
@@ -18,45 +17,19 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-//id
-const localStore = window.localStorage.getItem('myPhotoboothId');
-const id = localStore ? localStore : createId()
-function createId(){
-  let localId = uuidv4()
-  window.localStorage.setItem('myPhotoboothId', localId);
-  return localId
-}
 
-export default function App() {
-   const [lastInfo, setLastInfo ] = useState(null)
-   const [lastInfoId, setLastInfoId ] = useState(null)
-   const [lastInfoPhotoBlocked, setLastInfoPhotoBlocked ] = useState(null)
-   const [photos, setPhotos ] = useState(null)
+export default function App() { 
    const [initialLoad, setInitialLoad] = useState(true)
-   useEffect(() => {
-    database.ref('/lastInfo').on('value', (snapshot) => {
-      console.log('getting last info', snapshot.val())
-      let data = snapshot.val()
-      setLastInfoId(data.id)
-      setLastInfoPhotoBlocked(data.photoBlocked)
-    });
-    database.ref('/photos').on('value', (snapshot) => {
-      setPhotos(snapshot.val())
-    });
-   },[])
+
    
+  
    return (
       <Provider value={{
         database,
-        photos,
-        lastInfoId,
         initialLoad,
-        setInitialLoad,
-        lastInfoPhotoBlocked,
-        myPhotos: photos && photos[id] ? photos[id] : [],
-        id
+        setInitialLoad
       }}> 
-      {database && lastInfoId &&
+      {database && 
         <RouteComponent />
       }
       </Provider>
@@ -65,16 +38,3 @@ export default function App() {
   
   
 }
-
-
-    
-
-  
-  
-// }
-
-
-// export default Context
-
-
-

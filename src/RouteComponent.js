@@ -1,25 +1,19 @@
-
-
-
-import React, { useContext,useEffect, useState } from "react";
+import React from "react";
 import {Person, Booth } from './containers'
-import Context from './contexts/global'
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 export default function RouteComponent() {
-  const state = useContext(Context)
      return ( 
         <Router>
           <Routes>
-            <Route path="/" element={<Person />} />
-            <Route path="/photobooth" element={<Person />} />
-            <Route path="/booth/:id" element={<Booth id={id}/>} />
-            <Route path="photobooth/booth/:id" element={<Booth id={id}/>} />
+            <Route path="/user/:id" element={<Person/>} />
+            <Route path="/photobooth/user/:id" element={<Person/>} />
+            <Route path="/" element={<Booth />} />
+            <Route path="/photobooth/" element={<Booth/>} />
           </Routes>
         </Router>
     );

@@ -18,7 +18,7 @@ const videoConstraints = {
   aspectRatio: 1.777777777778,
 };
 
-const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {
+const WebcamCapture = ({takePhoto, onComplete, count, id}) => {
   const state = useContext(Context)
   const webcamRef = React.useRef(null);
   
@@ -58,11 +58,11 @@ const WebcamCapture = ({takePhoto, onComplete, count, lastId}) => {
         var response = JSON.parse(xhr.responseText);
         var url = response.secure_url;
         var type = file.type
-        onComplete(response.url, lastId)
+        onComplete(response.url)
         //CALL UPLOAD CALLBACK       
       }
     };
-    fd.append('folder','photobooth')
+    fd.append('folder', id)
     fd.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
     fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
     fd.append('file', file);
